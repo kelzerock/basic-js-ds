@@ -22,37 +22,29 @@ const { ListNode } = require('../extensions/list-node.js');
  *   }
  * }
  */
-const printList = (list, el) => {
-  if(list.value) {
-    if(!list.next) {
-      printList(list.next, el)
-    }
+
+ListNode.prototype.add = function(x){
+  if(!this.value) {
+    this.value = x
   } else {
-    list.value = el
-  }
-}
-
-function convertArrayToList(arr) {
-  return arr.reverse().reduce((acc, cur) => {
-    if (acc) {
-      const node = new ListNode(cur);
-      node.next = acc;
-      return node;
+    let node = this
+    while(node.next){
+      node = node.next
     }
-
-    return new ListNode(cur);
-  }, null);
+    let newNode = new ListNode(x)
+    node.next = newNode;
+  }
 }
 
 function removeKFromList(l, k) {
-  let arrData = []
+  let filteredList = new ListNode();
   while(l.next){
-    if (l.value !== k) arrData.push(l.value);
-    l = l.next
-    if (!l.next && l.value !== k) arrData.push(l.value)
+    if (l.value !== k) filteredList.add(l.value);
+    l = l.next;
+    if (!l.next && l.value !== k) filteredList.add(l.value);
   }
   
-  return convertArrayToList(arrData);
+  return filteredList;
 }
 
 module.exports = {
